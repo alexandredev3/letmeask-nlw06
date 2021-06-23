@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   > button {
-    margin-top: 64px;
     height: 58px;
     border-radius: 8px;
     font-weight: 500;
