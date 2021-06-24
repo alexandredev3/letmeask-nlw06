@@ -1,12 +1,14 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+type ContainerProps = {
+  isOutlined: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
   > button {
     height: 58px;
     border-radius: 8px;
     font-weight: 500;
-    background: #835afd;
-    color: #FFF;
     padding: 0 32px;
 
     display: flex;
@@ -17,6 +19,15 @@ export const Container = styled.div`
     border: 0;
 
     transition: filter 0.2s;
+
+    ${({ isOutlined }) => isOutlined ? css`
+      background: #FFF;
+      color: #835afd;
+      border: 1px solid #835afd;
+    ` : css`
+      background: #835afd;
+      color: #FFF;
+    `}
 
     > img {
       margin-right: 8px;

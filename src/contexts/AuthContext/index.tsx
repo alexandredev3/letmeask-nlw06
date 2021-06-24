@@ -1,24 +1,8 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { ReactNode } from 'react';
-import { createContext } from 'react';
+import { useState, useEffect, createContext } from 'react';
 
-import { firebase, auth } from '../../services/firebase'; 
+import { firebase, auth } from '../../services/firebase';
 
-type AuthProviderProps = {
-  children: ReactNode;
-}
-
-type User = {
-  id: string;
-  name: string;
-  avatar_url: string;
-}
-
-type AuthContextProps = {
-  user: User | null;
-  signInWithGoogle: () => Promise<void>;
-}
+import { AuthContextProps, AuthProviderProps, User } from './types';
 
 const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
