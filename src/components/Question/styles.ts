@@ -1,10 +1,38 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+type ContainerProps = {
+  isAnswered: boolean;
+  isHighlighted: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
   background: #fefefe;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
   padding: 24px;
+
+  ${({ isHighlighted, isAnswered }) => {
+    if (isHighlighted) {
+      return css`
+        background: #F4F0FF;
+        border: 1px solid #835AFD;
+
+        .user-info > span {
+          color: #29292E;
+        }
+      `;
+    } else if(isAnswered) {
+      return css`
+        background: #D8DCDD;
+        opacity: 0.7;
+        cursor: not-allowed;
+      `;
+    } else {
+      return css`
+
+      `;
+    }
+  }}
 
   & + & {
     margin-top: 8px;
@@ -21,10 +49,24 @@ export const Footer = styled.footer`
   align-items: center;
   margin-top: 24px;
 
+  > div {
+    display: flex;
+    gap: 16px;
+  }
+
   button {
     border: 0;
     background: transparent;
     cursor: pointer;
+
+
+    &.liked, &.answered, &.highlighted {
+      color: #835afd;
+
+      svg > path {
+        stroke: #835afd;
+      }
+    }
 
     &.like-button {
       display: flex;
@@ -33,14 +75,6 @@ export const Footer = styled.footer`
       gap: 8px;
 
       transition: filter 0.2s;
-
-      &.liked {
-        color: #835afd;
-
-        svg > path {
-          stroke: #835afd;
-        }
-      }
 
       &:hover {
         filter: brightness(0.7);

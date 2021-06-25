@@ -13,14 +13,25 @@ type QuestionProps = {
     avatar_url: string;
   }
   children: ReactNode;
+  isAnswered?: boolean;
+  isHighlighted?: boolean;
 }
 
-export function Question({ content, author, children }: QuestionProps) {
+export function Question({
+  content,
+  author,
+  isAnswered = false,
+  isHighlighted = false,
+  children
+}: QuestionProps) {
   return (
-    <Container>
+    <Container
+      isAnswered={isAnswered}
+      isHighlighted={isHighlighted}
+    >
       <p>{content}</p>
       <Footer>
-        <UserInfo>
+        <UserInfo className="user-info">
           <img src={author.avatar_url} alt={author.name} />
           <span>{author.name}</span>
         </UserInfo>
