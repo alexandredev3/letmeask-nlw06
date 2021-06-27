@@ -22,10 +22,10 @@ export const Container = styled.div<ContainerProps>`
 
     ${({ isOutlined }) => isOutlined ? css`
       background: #FFF;
-      color: #835afd;
-      border: 1px solid #835afd;
+      color: ${(props) => props.theme.colors.purple};
+      border: 1px solid ${(props) => props.theme.colors.purple};
     ` : css`
-      background: #835afd;
+      background: ${(props) => props.theme.colors.purple};
       color: #FFF;
     `}
 

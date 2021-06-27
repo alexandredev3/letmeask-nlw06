@@ -9,7 +9,7 @@ export const PageAuth = styled.div`
 export const Aside = styled.div`
   flex: 7;
 
-  background: #835afd;
+  background: ${(props) => props.theme.colors.purple};
   color: #FFF;
 
   display: flex;
@@ -32,7 +32,7 @@ export const Aside = styled.div`
     font-size: 24px;
     line-height: 32px;
     margin-top: 16px;
-    color: #f8f8f8;
+    color: ${(props) => props.theme.colors.white.background};
   }
 `;
 
@@ -70,7 +70,7 @@ export const MainContent = styled.div`
     margin-top: 16px;
 
     a {
-      color: #e559f9;
+      color: ${(props) => props.theme.colors.pink.dark};
     }
   }
 `; 

@@ -43,12 +43,12 @@ export const RoomTitle = styled.div`
   > h1 {
     font-family: 'Poppins', sans-serif;
     font-size: 24px;
-    color: #29292e;
+    color: ${(props) => props.theme.colors.black};
   }
 
   > span {
     margin-left: 16px;
-    background: #e559f9;
+    background: ${(props) => props.theme.colors.pink.dark};
     border-radius: 9999px;
     padding: 8px 16px;
     color: #FFF;

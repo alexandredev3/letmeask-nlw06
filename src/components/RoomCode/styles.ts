@@ -6,14 +6,14 @@ export const Container = styled.button`
   overflow: hidden;
 
   background: #fff;
-  border: 1px solid #835afd;
+  border: 1px solid ${(props) => props.theme.colors.purple};
   cursor: pointer;
 
   display: flex;
 
   div {
     height: 40px;
-    background: #835afd;
+    background: ${(props) => props.theme.colors.purple};
     padding: 0 12px;
     display: flex;
     justify-content: center;

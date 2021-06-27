@@ -6,7 +6,7 @@ type ContainerProps = {
 }
 
 export const Container = styled.div<ContainerProps>`
-  background: #fefefe;
+  background: ${(props) => props.theme.colors.white.details};
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
   padding: 24px;
@@ -15,10 +15,10 @@ export const Container = styled.div<ContainerProps>`
     if (isHighlighted) {
       return css`
         background: #F4F0FF;
-        border: 1px solid #835AFD;
+        border: 1px solid ${(props) => props.theme.colors.purple};
 
         .user-info > span {
-          color: #29292E;
+          color: ${(props) => props.theme.colors.black};
         }
       `;
     } else if(isAnswered) {
@@ -39,7 +39,7 @@ export const Container = styled.div<ContainerProps>`
   }
 
   > p {
-    color: 29292e;
+    color: ${(props) => props.theme.colors.black};
   }
 `;
 
@@ -61,17 +61,17 @@ export const Footer = styled.footer`
 
 
     &.liked, &.answered, &.highlighted {
-      color: #835afd;
+      color: ${(props) => props.theme.colors.purple};
 
       svg > path {
-        stroke: #835afd;
+        stroke: ${(props) => props.theme.colors.purple};
       }
     }
 
     &.like-button {
       display: flex;
       align-items: flex-end;
-      color: #737380;
+      color: ${(props) => props.theme.colors.gray.dark};
       gap: 8px;
 
       transition: filter 0.2s;
@@ -95,7 +95,7 @@ export const UserInfo = styled.div`
 
   > span {
     margin-left: 8px;
-    color: #737380;
+    color: ${(props) => props.theme.colors.gray.dark};
     font-size: 14px;
   }
 `;

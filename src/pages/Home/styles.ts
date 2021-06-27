@@ -9,8 +9,8 @@ export const PageAuth = styled.div`
 export const Aside = styled.div`
   flex: 7;
 
-  background: #835afd;
-  color: #FFF;
+  background: ${(props) => props.theme.colors.purple};
+  color: ${(props) => props.theme.colors.white.details};
 
   display: flex;
   flex-direction: column;
@@ -60,18 +60,18 @@ export const MainContent = styled.div`
 
   .create-room {
     margin-top: 64px;
-    height: 58px;
+    height: 50px;
     border-radius: 8px;
     font-weight: 500;
-    background: #ea4335;
-    color: #FFF;
+    background: transparent;
+    border: 1px solid ${(props) => props.theme.colors.gray.medium};
+    color: ${(props) => props.theme.colors.black};
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     cursor: pointer;
-    border: 0;
 
     transition: filter 0.2s;
 
@@ -86,7 +86,7 @@ export const MainContent = styled.div`
 
   .separator {
     font-size: 14px;
-    color: #a8a8b3;
+    color: ${(props) => props.theme.colors.gray.medium};
 
     display: flex;
     align-items: center;
@@ -96,7 +96,7 @@ export const MainContent = styled.div`
       content: '';
       flex: 1;
       height: 1px;
-      background: #a8a8b3;
+      background: ${(props) => props.theme.colors.gray.medium};
       margin-right: 16px;
     }
 
@@ -104,7 +104,7 @@ export const MainContent = styled.div`
       content: '';
       flex: 1;
       height: 1px;
-      background: #a8a8b3;
+      background: ${(props) => props.theme.colors.gray.medium};
       margin-left: 16px;
     }
   }
@@ -116,7 +116,7 @@ export const Form = styled.form`
     border-radius: 8px;
     padding: 0 16px;
     background: #FFF;
-    border: 1px solid #a8a8b3;
+    border: 1px solid ${(props) => props.theme.colors.gray.medium};
   }
 
   button {

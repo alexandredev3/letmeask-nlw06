@@ -10,7 +10,7 @@ import { PageAuth, Aside, Main, MainContent, Form } from './styles';
 
 import illustrationImg from '../../assets/images/illustration.svg';
 import logoImg from '../../assets/images/logo.svg';
-import googleIconImg from '../../assets/images/google-icon.svg';
+import googleIconImg from '../../assets/images/google-icon-color.svg';
 
 export function Home() {
   const { signInWithGoogle, user } = useAuth();
