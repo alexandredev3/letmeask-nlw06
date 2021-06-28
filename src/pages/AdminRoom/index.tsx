@@ -1,6 +1,5 @@
 import { useHistory, useParams } from "react-router-dom";
 
-import logoImg from "../../assets/images/logo.svg";
 import deleteImg from "../../assets/images/delete.svg";
 
 import { useAuth } from "../../hooks/useAuth";
@@ -8,15 +7,12 @@ import { useRoom } from "../../hooks/useRoom";
 
 import { database } from "../../services/firebase";
 
-import { Button } from "../../components/Button";
-import { RoomCode } from "../../components/RoomCode";
 import { Question } from "../../components/Question";
 import { EmptyQuestions } from "../../components/EmptyQuestions";
+import { Header } from '../../components/Header';
 
 import {
   PageRoom,
-  Header,
-  Content,
   Main,
   RoomTitle,
   QuestionList,
@@ -83,17 +79,11 @@ export function AdminRoom() {
 
   return (
     <PageRoom>
-      <Header>
-        <Content>
-          <img src={logoImg} alt="Letmeask logo" />
-          <div>
-            <RoomCode code={roomId} />
-            <Button isOutlined onClick={handleEndRoom}>
-              Encerrar Sala
-            </Button>
-          </div>
-        </Content>
-      </Header>
+      <Header
+        roomId={roomId}
+        isAdmin
+        handleEndRoom={handleEndRoom}
+      />
 
       <Main>
         <RoomTitle>

@@ -16,7 +16,7 @@ type Response = FirebaseRoom & {
   questions: QuestionProps[];
 }
 
-export function recoveryQuestions(room: firebase.database.DataSnapshot, userId: string | undefined): Response 
+export function retrieveRoomData(room: firebase.database.DataSnapshot, userId: string | undefined): Response 
 {
   const databaseRoom = room.val();
   const firebaseQuestions: FirebaseQuestion = databaseRoom.questions ?? {};
@@ -38,7 +38,6 @@ export function recoveryQuestions(room: firebase.database.DataSnapshot, userId: 
           .entries(value.likes ?? {})
           .find(([ key, value ]) => value?.authorId === userId )?.[0] // [string, {authorId: string}]
     }
-
   });
 
   return {

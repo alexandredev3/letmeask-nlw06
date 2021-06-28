@@ -12,7 +12,7 @@ export const Container = styled.button`
   display: flex;
 
   div {
-    height: 40px;
+    height: 45px;
     background: ${(props) => props.theme.colors.purple};
     padding: 0 12px;
     display: flex;

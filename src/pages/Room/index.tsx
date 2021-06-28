@@ -1,20 +1,16 @@
 import { FormEvent, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
-import logoImg from "../../assets/images/logo.svg";
-
 import { database } from "../../services/firebase";
 import { useAuth } from "../../hooks/useAuth";
 
 import { Button } from "../../components/Button";
-import { RoomCode } from "../../components/RoomCode";
 import { Question } from "../../components/Question";
 import { EmptyQuestions } from "../../components/EmptyQuestions";
+import { Header } from '../../components/Header';
 
 import {
   PageRoom,
-  Header,
-  Content,
   Main,
   UserInfo,
   RoomTitle,
@@ -82,14 +78,12 @@ export function Room() {
     }
   }
 
+  console.log("Redelizando Componente")
   return (
     <PageRoom>
-      <Header>
-        <Content>
-          <img src={logoImg} alt="Letmeask logo" />
-          <RoomCode code={roomId} />
-        </Content>
-      </Header>
+      <Header
+        roomId={roomId}
+      />
 
       <Main>
         <RoomTitle>

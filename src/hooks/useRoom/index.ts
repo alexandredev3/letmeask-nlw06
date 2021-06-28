@@ -3,13 +3,15 @@ import { useEffect, useState } from 'react';
 import { database } from '../../services/firebase';
 
 import { QuestionProps } from './types';
-import { recoveryQuestions } from '../../utils/recoveryQuestions';
+import { retrieveRoomData } from '../../utils/retrieveRoomData';
 import { useAuth } from '../useAuth';
 
 export function useRoom(roomId: string) {
   const { user } = useAuth();
   const [questions, setQuestions] = useState<QuestionProps[]>([]);
   const [title, setTitle] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [isCurrentUserRoomAdmin, setIsCurrentUserRoomAdmin] = useState(false);
   const [roomExists, setRoomExists] = useState(false);
 
   useEffect(() => {
@@ -22,10 +24,13 @@ export function useRoom(roomId: string) {
       // TODO: fazer uma verificação mais profunda, para saber quais items foram
       // alterados.
       roomRef.on('value', (room) => {
-        const data = recoveryQuestions(room, userId);
-  
+        const data = retrieveRoomData(room, userId);
+        const isCurrentUserRoomAdmin = data.authorId === user?.id;
+
+        setIsCurrentUserRoomAdmin(isCurrentUserRoomAdmin);
         setTitle(data.title);
         setQuestions(data.questions);
+        setIsLoading(false);
       });
   
       return () => {
@@ -37,6 +42,8 @@ export function useRoom(roomId: string) {
   return {
     questions,
     title,
-    roomExists
+    roomExists,
+    isCurrentUserRoomAdmin,
+    isLoading
   }
 }
