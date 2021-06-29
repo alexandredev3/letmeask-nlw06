@@ -23,6 +23,7 @@ type ComputedMatch = {
   }
 }
 
+// TODO: Fazer verificações se a sala existe ou se ja foi encerrada.
 export function RoomRoute({ 
   isAdmin = false,
   component: Component,

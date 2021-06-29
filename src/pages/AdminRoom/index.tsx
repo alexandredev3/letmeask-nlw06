@@ -1,8 +1,9 @@
 import { useHistory, useParams } from "react-router-dom";
 
 import deleteImg from "../../assets/images/delete.svg";
+import deleteIconImg from "../../assets/images/delete-icon.svg";
+import xIconImg from '../../assets/images/x-icon.svg';
 
-import { useAuth } from "../../hooks/useAuth";
 import { useRoom } from "../../hooks/useRoom";
 
 import { database } from "../../services/firebase";
@@ -17,13 +18,15 @@ import {
   RoomTitle,
   QuestionList,
 } from "./styles";
+import { useModal } from "../../hooks/useModal";
 
 type RoomParams = {
   id: string;
 };
 
 export function AdminRoom() {
-  const { user } = useAuth();
+  const { addModal } = useModal();
+
   const params = useParams<RoomParams>();
   const history = useHistory();
 
@@ -32,30 +35,41 @@ export function AdminRoom() {
   const { questions, title } = useRoom(roomId);
 
   async function handleEndRoom() {
-    const confirmed = window.confirm("Tem certeza que deseja encerrar a sala?");
+    addModal({
+      icon: xIconImg,
+      title: "Encerrar sala",
+      description: "Tem certeza que você deseja encerrar esta sala?",
+      cancel: {
+        text: 'Cancelar'
+      },
+      confirm: {
+        text: 'Sim, encerrar',
+        handle: async () => {
+          await database.ref(`rooms/${roomId}`).update({
+            endedAt: new Date(),
+          });
 
-    if (confirmed) {
-      await database.ref(`rooms/${roomId}`).update({
-        endedAt: new Date(),
-      });
-
-      return history.push("/");
-    }
-
-    return;
+          history.push("/");
+        }
+      }
+    });
   }
 
   async function handleDeleteQuestion(id: string) {
-    const confirmed = window.confirm(
-      "Tem certeza que deseja deletar essa pergunta?"
-    );
-
-    if (confirmed) {
-      await database.ref(`rooms/${roomId}/questions/${id}`).remove();
-      return;
-    }
-
-    return;
+    addModal({
+      icon: deleteIconImg,
+      title: "Excluir pergunta",
+      description: "Tem certeza que você deseja excluir esta pergunta?",
+      cancel: {
+        text: 'Cancelar'
+      },
+      confirm: {
+        text: 'Sim, excluir',
+        handle: async () => {
+          await database.ref(`rooms/${roomId}/questions/${id}`).remove();
+        }
+      }
+    });
   }
 
   async function handleCheckQuestionAsAnswer(id: string) {

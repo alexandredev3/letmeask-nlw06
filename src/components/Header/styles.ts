@@ -16,15 +16,12 @@ export const Content = styled.div`
     max-height: 45px;
   }
 
-  div {
+  > div {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 16px;
 
-    gap: 10px;
-  }
-
-  button {
-    height: 45px;
+    button {
+      height: 40px;
+    }
   }
 `;

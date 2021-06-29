@@ -14,6 +14,7 @@ import googleIconImg from '../../assets/images/google-icon-color.svg';
 
 export function Home() {
   const { signInWithGoogle, user } = useAuth();
+
   const history = useHistory();
   const [roomCode, setRoomCode] = useState('');
 
