@@ -43,6 +43,7 @@ export function Modal({
       isOpen={isOpen}
       preventScroll
       shouldCloseOnEsc
+      shouldReturnFocusAfterClose
       shouldCloseOnOverlayClick
       aria={{
         labelledby: 'heading',
