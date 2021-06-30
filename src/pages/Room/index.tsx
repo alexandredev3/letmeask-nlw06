@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { database } from "../../services/firebase";
 import { useAuth } from "../../hooks/useAuth";
@@ -25,10 +26,9 @@ type RoomParams = {
 };
 
 export function Room() {
-  const { user } = useAuth();
+  const { user, signInWithGoogle } = useAuth();
   const params = useParams<RoomParams>();
   const [question, setQuestion] = useState("");
-  const history = useHistory();
 
   const roomId = params.id;
 
@@ -46,21 +46,34 @@ export function Room() {
       throw new Error("You must be logged in");
     }
 
-    const newQuestion = {
-      content: question,
-      author: {
-        name: user.name,
-        avatar_url: user.avatar_url,
-      },
-      isHighlighted: false,
-      isAnswered: false,
-    };
+    const sendQuestionPromise: Promise<string | Error> = 
+      new Promise((resolve, reject) => {
+        const roomRef = database.ref(`rooms/${roomId}/questions`);
+        
+        const newQuestion = {
+          content: question,
+          author: {
+            name: user.name,
+            avatar_url: user.avatar_url,
+          },
+          isHighlighted: false,
+          isAnswered: false,
+        };
 
-    await database.ref(`rooms/${roomId}/questions`).push(newQuestion);
+        roomRef.push(newQuestion).then(() => {
+          resolve('Pergunta foi enviada com sucesso!');
+        }).catch(err => {
+          reject(err);
+        })
+      });
+
+    toast.promise<string | Error>(sendQuestionPromise, {
+      loading: 'Enviando pergunta...',
+      success: (data) => data.toString(),
+      error: (err) => err.toString(),
+    });
 
     setQuestion("");
-
-    alert("Pergunta enviada com sucesso!");
     return;
   }
 
@@ -78,7 +91,6 @@ export function Room() {
     }
   }
 
-  console.log("Redelizando Componente")
   return (
     <PageRoom>
       <Header
@@ -109,7 +121,7 @@ export function Room() {
             ) : (
               <span>
                 Para enviar uma pergunta,
-                <button type="button" onClick={() => history.push("/")}>
+                <button type="button" onClick={() => signInWithGoogle()}>
                   faça seu login.
                 </button>
               </span>

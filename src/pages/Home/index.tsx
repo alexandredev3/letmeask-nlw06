@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 import { Button } from '../../components/Button';
 
@@ -38,19 +39,38 @@ export function Home() {
       return;
     }
     
-    const roomRef = await database.ref(`rooms/${roomCode}`).get();
+    
+    const fetchRoomPromise: Promise<string | Error> = new Promise((resolve, reject) => {
+      const roomRef = database.ref(`rooms/${roomCode}`);
+      
+      roomRef.get().then(DataSnapshot => {
+        const roomExists = DataSnapshot.exists();
 
-    if (!roomRef.exists()) {
-      alert('Essa sala não existe');
-      return;
-    }
+        if (!roomExists) {
+          throw new Error('Essa sala não existe')
+        }
 
-    if (roomRef.val().endedAt) {
-      alert('Essa sala foi encerrada!');
-      return;
-    }
+        const roomData = DataSnapshot.val();
+        
+        if (roomData.endedAt) {
+          throw new Error('Essa sala foi encerrada!')
+        }
 
-    history.push(`/rooms/${roomCode}`);
+        resolve(`Seja Bem-vindo(a) a sala "${roomData.title}"`);
+      }).catch(err => {
+        reject(err);
+      })
+    });
+
+    toast.promise<string | Error>(fetchRoomPromise, {
+      loading: 'Encontrando na sala...',
+      success: (data) => {
+        history.push(`/rooms/${roomCode}`);
+        
+        return data.toString();
+      },
+      error: (err) => err.toString(),
+    });
   }
 
   return (

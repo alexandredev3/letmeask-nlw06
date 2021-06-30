@@ -1,4 +1,5 @@
 import { useHistory, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import deleteImg from "../../assets/images/delete.svg";
 import deleteIconImg from "../../assets/images/delete-icon.svg";
@@ -45,11 +46,28 @@ export function AdminRoom() {
       confirm: {
         text: 'Sim, encerrar',
         handle: async () => {
-          await database.ref(`rooms/${roomId}`).update({
-            endedAt: new Date(),
+          const endupRoomPromise: Promise<string | Error> = 
+            new Promise((resolve, reject) => {
+              const roomRef = database.ref(`rooms/${roomId}`);
+      
+              roomRef.update({
+                endedAt: new Date(),
+              }).then(() => {
+                resolve(`Sala "${title}" foi encerrada com sucesso!`);
+              }).catch(err => {
+                reject(err);
+              })
+            });
+      
+          toast.promise<string | Error>(endupRoomPromise, {
+            loading: 'Encerrando sala...',
+            success: (data) => {
+              history.push("/");
+              
+              return data.toString();
+            },
+            error: (err) => err.toString(),
           });
-
-          history.push("/");
         }
       }
     });
@@ -66,7 +84,24 @@ export function AdminRoom() {
       confirm: {
         text: 'Sim, excluir',
         handle: async () => {
-          await database.ref(`rooms/${roomId}/questions/${id}`).remove();
+          
+          const delateQuestionPromise: Promise<string | Error> = 
+            new Promise((resolve, reject) => {
+              const roomRef = database.ref(`rooms/${roomId}/questions/${id}`);
+      
+              roomRef.remove()
+                .then(() => {
+                  resolve(`Pergunta deletada com sucesso!`);
+                }).catch(err => {
+                  reject(err);
+                })
+            });
+      
+          toast.promise<string | Error>(delateQuestionPromise, {
+            loading: 'Deletando pergunta...',
+            success: (data) => data.toString(),
+            error: (err) => err.toString(),
+          });
         }
       }
     });

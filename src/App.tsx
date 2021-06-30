@@ -7,6 +7,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { ModalProvider } from './contexts/ModalContext';
 
 import { Global } from './styles/css/Global';
+import { Toast } from './components/Toast';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <ThemeProvider>
         <AuthProvider>
           <ModalProvider>
+            <Toast />
             <Global />
             <Routes />
           </ModalProvider>

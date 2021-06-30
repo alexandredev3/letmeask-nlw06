@@ -1,9 +1,10 @@
 import { useState, FormEvent } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 import { useAuth } from '../../hooks/useAuth';
 
-import { database } from '../../services/firebase';
+import { firebase, database } from '../../services/firebase';
 
 import illustrationImg from '../../assets/images/illustration.svg';
 import logoImg from '../../assets/images/logo.svg';
@@ -24,18 +25,31 @@ export function NewRoom() {
       return alert('Digite o nome da sala para continuar...');
     }
 
-    try {
-      const roomRef = database.ref('rooms');
+    const createRoomPromise: Promise<firebase.database.Reference> = 
+      new Promise((resolve, reject) => {
+        const roomRef = database.ref('rooms');
 
-      const firebaseRoom = await roomRef.push({
-        title: newRoom,
-        authorId: user?.id
+        roomRef.push({
+          title: newRoom,
+          authorId: user?.id
+        }).then(DataSnapshot => {
+          resolve(DataSnapshot);
+        }).catch(err => {
+          reject(err);
+        })
       });
 
-      history.push(`/rooms/${firebaseRoom.key}`);
-    } catch (err) {
-      console.log(err);
-    }
+    toast.promise<firebase.database.Reference>(createRoomPromise, {
+      loading: 'Criando sala...',
+      success: (data) => {
+        history.push(`/rooms/${data.key}`);
+        
+        return `
+          A sala "${newRoom}" foi criada com sucesso!
+        `;
+      },
+      error: (err) => err.toString(),
+    });
   }
 
   return (
