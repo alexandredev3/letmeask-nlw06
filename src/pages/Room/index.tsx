@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 
 import { database } from "../../services/firebase";
 import { useAuth } from "../../hooks/useAuth";
+import { useRoom } from "../../hooks/useRoom";
 
 import { Button } from "../../components/Button";
 import { Question } from "../../components/Question";
@@ -19,7 +20,6 @@ import {
   FormFooter,
   QuestionList,
 } from "./styles";
-import { useRoom } from "../../hooks/useRoom";
 
 type RoomParams = {
   id: string;

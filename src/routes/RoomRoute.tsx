@@ -5,6 +5,8 @@ import {
   RouteProps as DOMRouteProps
 } from 'react-router-dom';
 
+import { Loading } from '../components/Loading';
+
 import { useRoom } from '../hooks/useRoom';
 
 interface RouteProps extends DOMRouteProps {
@@ -35,7 +37,7 @@ export function RoomRoute({
   const { isLoading, isCurrentUserRoomAdmin } = useRoom(params.id);
 
   if (isLoading) {
-    return <Fragment />;
+    return <Loading />;
   }
 
   return (
