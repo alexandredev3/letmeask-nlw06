@@ -46,7 +46,9 @@ Este projeto foi desenvolvido com as seguintes tecnologias
 - [React.js](https://pt-br.reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Styled Components](https://styled-components.com/)
-
+- [React Hot Toast](https://react-hot-toast.com/)
+- [React Modal](https://github.com/reactjs/react-modal)
+  
 ## :clipboard: Funcionalidades
 - [x] Faça login com Google.
 - [x] Crie salas.
